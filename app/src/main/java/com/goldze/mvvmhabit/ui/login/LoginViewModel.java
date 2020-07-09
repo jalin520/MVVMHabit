@@ -5,13 +5,24 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.goldze.mvvmhabit.data.DemoRepository;
+import com.goldze.mvvmhabit.data.source.http.service.DemoApiService2;
+import com.goldze.mvvmhabit.entity.VillageStructuresResult;
 import com.goldze.mvvmhabit.ui.main.DemoActivity;
+import com.goldze.mvvmhabit.ui.test.TestListActivity;
+import com.goldze.mvvmhabit.utils.RetrofitClientTest;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
@@ -77,6 +88,15 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
         @Override
         public void call() {
             login();
+        }
+    });
+    //测试按钮点击
+    public BindingCommand testOnClickCommand = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            Log.d("test", "request");
+            startActivity(TestListActivity.class);
+
         }
     });
 

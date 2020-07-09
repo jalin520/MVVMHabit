@@ -151,10 +151,19 @@
                     binding:onClickCommand="@{viewModel.loginOnClickCommand}" />
             </LinearLayout>
 
-            <TextView
-                android:gravity="center"
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:text="测试"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                binding:onClickCommand="@{viewModel.testOnClickCommand}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="模拟一个登陆操作,随便输入账号密码点击登录即可进入"
                 android:textColor="#EE1010" />
         </LinearLayout>

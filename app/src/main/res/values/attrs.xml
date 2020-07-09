@@ -13,4 +13,16 @@
         <attr name="onRefreshCommand" format="reference" />
         <attr name="onLoadMoreCommand" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="MarqueeTextView">
+        <attr name="repeatCount" format="integer" /><!-- 滚动重复次数 ，-1表示无限重复，0 表示不重复只执行一次 -->
+        <attr name="rndDuration" format="integer" /><!-- 滚动1000分辨率需要的毫秒 -->
+        <attr name="restore" format="boolean" /><!--停止滚动停止后是否还原-->
+        <attr name="direction"><!-- 滑动规则 0:从右到左边 1:/从下到上 -->
+            <enum name="fit_horizontal" value="0" />
+            <enum name="fit_vertical" value="1" />
+            <enum name="auto_horizontal" value="0" />
+            <enum name="auto_vertical" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    tools:context=".ui.test.MarqueeTestActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="滚动的文字"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="滚动1000分辨率花费的毫秒数：" />
+
+            <EditText
+                android:id="@+id/edit_speed"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:hint="速度"
+                android:inputType="number"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="滚动重复次数：" />
+
+            <EditText
+                android:id="@+id/edit_replace"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:digits="1234567890-"
+                android:hint="重复次数"
+                android:inputType="numberDecimal"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/radioGroup_direction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_auto_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="横向滚动"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/radio_fit_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="横向适配"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/radio_auto_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="纵向滚动"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/radio_fit_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="纵向适配"
+                android:textSize="20sp" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="开始滚动" />
+
+            <Button
+                android:id="@+id/btnStop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="停止滚动" />
+        </LinearLayout>
+
+
+        <com.goldze.mvvmhabit.ui.test.MarqueeTextView
+            android:id="@+id/marqueeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            android:text="人生在世，总要承担点责任或者找点寄托。所以有人在养父养母养妻儿，有人养猫养狗养鸟鱼，有人养花养草养树木。我比较高级，闭上眼睛就开始养神。"
+            android:textSize="90sp"
+            app:direction="fit_horizontal"
+            app:repeatCount="-1"
+            app:restore="true"
+            app:rndDuration="3500" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
