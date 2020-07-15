@@ -49,6 +49,7 @@ public class TestListActivity extends AppCompatActivity {
         loadTestListData();
         loadExcelTest();
         testMarquee();
+        testTTS();
         final TestListAdapter testListAdapter = new TestListAdapter(testList);
         testListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -239,6 +240,16 @@ public class TestListActivity extends AppCompatActivity {
                 startActivity(new Intent(TestListActivity.this, MarqueeTestActivity.class));
             }
         }));
+    }
+
+    public void testTTS() {
+        testList.add(new TestListBean("文字转换语音", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TestListActivity.this, TTSActivity.class));
+            }
+        }));
+
     }
 
     public class TestListAdapter extends BaseQuickAdapter<TestListBean, BaseViewHolder> {
