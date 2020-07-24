@@ -116,7 +116,6 @@ public class MultiSendThread extends Thread {
                         datagramPacket.setAddress(address);
                         // 发送的端口号
                         datagramPacket.setPort(10001);
-                        System.out.println("AudioRTwritePacket = " + datagramPacket.getData().toString());
 
                         multicastSocket.send(datagramPacket);
                         if (onSendListener != null) {
@@ -127,7 +126,6 @@ public class MultiSendThread extends Thread {
 
 
 //                    String message = "abc:" + i++;
-//                    System.out.println("AudioRTwritePacket = " + message);
 //                    byte[] bytes_pkg = message.getBytes();
 //                    // 组报
 //                    DatagramPacket datagramPacket = new DatagramPacket(bytes_pkg, bytes_pkg.length);

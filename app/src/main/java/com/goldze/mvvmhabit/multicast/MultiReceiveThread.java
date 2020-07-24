@@ -86,7 +86,6 @@ public class MultiReceiveThread extends Thread {
                 // 接收数据，同样会进入阻塞状态
                 multicastSocket.receive(datagramPacket);
                 audioTrk.write(datagramPacket.getData(), 0, datagramPacket.getLength());
-                System.out.println("MultiReceiveThread = " + datagramPacket.getData().toString());
                 if (onReceiveListener != null) {
                     onReceiveListener.onReceive(i++ + ",");
                 }
@@ -97,7 +96,6 @@ public class MultiReceiveThread extends Thread {
 //                // 接收数据，同样会进入阻塞状态
 //                multicastSocket.receive(datagramPacket);
 //                String message = new String(buffer, 0, datagramPacket.getLength());
-//                System.out.println("MultiReceiveThread = " + message);
 //                if (onReceiveListener != null) {
 //                    onReceiveListener.onReceive(message);
 //                }
