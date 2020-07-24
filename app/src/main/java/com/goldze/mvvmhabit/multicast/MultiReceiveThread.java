@@ -14,13 +14,13 @@ import java.net.MulticastSocket;
  * Created by Administrator on 2020/7/23.
  */
 public class MultiReceiveThread extends Thread {
-    public static final String IP = "239.0.0.1";
-    MulticastSocket multicastSocket;
-    byte[] buffer;
-    AudioTrack audioTrk;
-    InetAddress address;
-    boolean isStop;
-    OnReceiveListener onReceiveListener;
+    private MulticastSocket multicastSocket;
+    private byte[] buffer;
+    private AudioTrack audioTrk;
+    private InetAddress address;
+    private boolean isStop;
+    private OnReceiveListener onReceiveListener;
+    private int minBufferSize;
 
 
     public MultiReceiveThread() {
@@ -52,23 +52,25 @@ public class MultiReceiveThread extends Thread {
         int mode = AudioTrack.MODE_STREAM;
         //录音用输入单声道  播放用输出单声道
         int channelConfig = AudioFormat.CHANNEL_OUT_MONO;
-        int recBufSize = AudioTrack.getMinBufferSize(
+        minBufferSize = AudioTrack.getMinBufferSize(
                 sampleRate,
                 channelConfig,
                 audioFormat);
-        System.out.println("****playRecBufSize = " + recBufSize);
+        System.out.println("**** play minBufferSize = " + minBufferSize);
         audioTrk = new AudioTrack(
                 streamType,
                 sampleRate,
                 channelConfig,
                 audioFormat,
-                recBufSize,
+                minBufferSize,
                 mode);
         audioTrk.setStereoVolume(AudioTrack.getMaxVolume(),
                 AudioTrack.getMaxVolume());
-        buffer = new byte[recBufSize];
+        buffer = new byte[minBufferSize];
 
     }
+
+    int i = 0;
 
     @Override
     public void run() {
@@ -80,22 +82,25 @@ public class MultiReceiveThread extends Thread {
         while (!isStop) {
             try {
                 // 数据报
-//                DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length);
-//                // 接收数据，同样会进入阻塞状态
-//                multicastSocket.receive(datagramPacket);
-//                audioTrk.write(datagramPacket.getData(), 0, datagramPacket.getLength());
-//                System.out.println("MultiReceiveThread = " + datagramPacket.getData().toString());
-
-
-                byte[] buffer = new byte[1024];
                 DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length);
                 // 接收数据，同样会进入阻塞状态
                 multicastSocket.receive(datagramPacket);
-                String message = new String(buffer, 0, datagramPacket.getLength());
-                System.out.println("MultiReceiveThread = " + message);
+                audioTrk.write(datagramPacket.getData(), 0, datagramPacket.getLength());
+                System.out.println("MultiReceiveThread = " + datagramPacket.getData().toString());
                 if (onReceiveListener != null) {
-                    onReceiveListener.onReceive(message);
+                    onReceiveListener.onReceive(i++ + ",");
                 }
+
+
+//                byte[] buffer = new byte[1024];
+//                DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length);
+//                // 接收数据，同样会进入阻塞状态
+//                multicastSocket.receive(datagramPacket);
+//                String message = new String(buffer, 0, datagramPacket.getLength());
+//                System.out.println("MultiReceiveThread = " + message);
+//                if (onReceiveListener != null) {
+//                    onReceiveListener.onReceive(message);
+//                }
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

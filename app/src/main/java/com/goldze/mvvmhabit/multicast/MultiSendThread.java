@@ -27,8 +27,8 @@ public class MultiSendThread extends Thread {
     private static AcousticEchoCanceler aec;
     private static AutomaticGainControl agc;
     private static NoiseSuppressor nc;
-    AudioRecord audioRec;
-    byte[] buffer;
+    private  AudioRecord audioRec;
+    private   byte[] buffer;
     private OnSendListener onSendListener;
 
     public MultiSendThread() {
@@ -57,8 +57,9 @@ public class MultiSendThread extends Thread {
 
         minBufferSize = AudioRecord.getMinBufferSize(
                 sampleRate,
-                channelConfig, AudioFormat.ENCODING_PCM_16BIT);
-        System.out.println("****RecordMinBufferSize = " + minBufferSize);
+                channelConfig,
+                audioFormat);
+        System.out.println("****record minBufferSize = " + minBufferSize);
         audioRec = new AudioRecord(
                 MediaRecorder.AudioSource.MIC,
                 sampleRate,
@@ -106,35 +107,38 @@ public class MultiSendThread extends Thread {
             audioRec.startRecording();
             while (!isStop) {
                 try {
-//                    byte[] bytes_pkg = buffer.clone();
-//                    if (mRecordQueue.size() >= 2) {
-//                        int length = audioRec.read(buffer, 0, minBufferSize);
-//                        // 组报
-//                        DatagramPacket datagramPacket = new DatagramPacket(buffer, length);
-//                        // 向组播ID，即接收group /239.0.0.1  端口 10001
-//                        datagramPacket.setAddress(address);
-//                        // 发送的端口号
-//                        datagramPacket.setPort(10001);
-//                        System.out.println("AudioRTwritePacket = " + datagramPacket.getData().toString());
-//
-//                        multicastSocket.send(datagramPacket);
-//                    }
-//                    mRecordQueue.add(bytes_pkg);
+                    byte[] bytes_pkg = buffer.clone();
+                    if (mRecordQueue.size() >= 2) {
+                        int length = audioRec.read(buffer, 0, minBufferSize);
+                        // 组报
+                        DatagramPacket datagramPacket = new DatagramPacket(buffer, length);
+                        // 向组播ID，即接收group /239.0.0.1  端口 10001
+                        datagramPacket.setAddress(address);
+                        // 发送的端口号
+                        datagramPacket.setPort(10001);
+                        System.out.println("AudioRTwritePacket = " + datagramPacket.getData().toString());
 
-
-                    String message = "abc:" + i++;
-                    System.out.println("AudioRTwritePacket = " + message);
-                    byte[] bytes_pkg = message.getBytes();
-                    // 组报
-                    DatagramPacket datagramPacket = new DatagramPacket(bytes_pkg, bytes_pkg.length);
-                    // 向组播ID，即接收group /239.0.0.1  端口 10001
-                    datagramPacket.setAddress(address);
-                    datagramPacket.setPort(10001);
-                    multicastSocket.send(datagramPacket);
-                    if (onSendListener != null) {
-                        onSendListener.onSend(message);
+                        multicastSocket.send(datagramPacket);
+                        if (onSendListener != null) {
+                            onSendListener.onSend(i++ + ",");
+                        }
                     }
-                    Thread.sleep(500);
+                    mRecordQueue.add(bytes_pkg);
+
+
+//                    String message = "abc:" + i++;
+//                    System.out.println("AudioRTwritePacket = " + message);
+//                    byte[] bytes_pkg = message.getBytes();
+//                    // 组报
+//                    DatagramPacket datagramPacket = new DatagramPacket(bytes_pkg, bytes_pkg.length);
+//                    // 向组播ID，即接收group /239.0.0.1  端口 10001
+//                    datagramPacket.setAddress(address);
+//                    datagramPacket.setPort(10001);
+//                    multicastSocket.send(datagramPacket);
+//                    if (onSendListener != null) {
+//                        onSendListener.onSend(message);
+//                    }
+//                    Thread.sleep(500);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

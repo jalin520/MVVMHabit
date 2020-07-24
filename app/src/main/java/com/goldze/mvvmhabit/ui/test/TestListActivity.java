@@ -255,7 +255,7 @@ public class TestListActivity extends AppCompatActivity {
     }
 
     public void testMultiAudio() {
-        testList.add(new TestListBean("多点广播测试", new View.OnClickListener() {
+        testList.add(new TestListBean("多点广播通话", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(TestListActivity.this, MultiAudioActivity.class));
