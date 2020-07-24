@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MVVMHabit-sample</string>
+    <string name="title_activity_multi_audio">MultiAudioActivity</string>
 </resources>

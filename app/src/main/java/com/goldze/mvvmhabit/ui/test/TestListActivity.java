@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.data.source.http.service.DemoApiService2;
 import com.goldze.mvvmhabit.entity.VillageStructuresResult;
+import com.goldze.mvvmhabit.multicast.MultiAudioActivity;
 import com.goldze.mvvmhabit.test.HttpClient;
 import com.goldze.mvvmhabit.utils.DemoBean;
 import com.goldze.mvvmhabit.utils.ExcelUtil;
@@ -50,6 +51,7 @@ public class TestListActivity extends AppCompatActivity {
         loadExcelTest();
         testMarquee();
         testTTS();
+        testMultiAudio();
         final TestListAdapter testListAdapter = new TestListAdapter(testList);
         testListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -250,6 +252,16 @@ public class TestListActivity extends AppCompatActivity {
             }
         }));
 
+    }
+
+    public void testMultiAudio() {
+        testList.add(new TestListBean("多点广播测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TestListActivity.this, MultiAudioActivity.class));
+
+            }
+        }));
     }
 
     public class TestListAdapter extends BaseQuickAdapter<TestListBean, BaseViewHolder> {
