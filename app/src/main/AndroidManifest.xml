@@ -43,6 +43,15 @@
         <activity android:name=".ui.main.DemoActivity" />
         <activity android:name=".ui.tab_bar.activity.TabBarActivity" />
         <activity android:name=".ui.viewpager.activity.ViewPagerActivity" />
+
+        <service
+            android:name=".service.TestService"
+            android:process=":test">
+
+            <intent-filter>
+                <action android:name="com.goldze.mvvmhabit.service.TestService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

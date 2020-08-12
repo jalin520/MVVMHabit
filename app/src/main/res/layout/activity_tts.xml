@@ -19,7 +19,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:hint="请您输入要朗读的文字"
-            android:text="人生在世，总要承担点责任或者找点寄托。所以有人在养父养母养妻儿，有人养猫养狗养鸟鱼，有人养花养草养树木。我比较高级，闭上眼睛就开始养神。"
+            android:text="01床01房普通呼叫"
             tools:ignore="HardcodedText" />
 
         <android.support.v7.widget.AppCompatButton

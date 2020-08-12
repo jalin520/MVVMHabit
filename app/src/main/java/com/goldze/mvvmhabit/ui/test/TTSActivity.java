@@ -1,6 +1,7 @@
 package com.goldze.mvvmhabit.ui.test;
 
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -38,6 +39,24 @@ public class TTSActivity extends AppCompatActivity implements View.OnClickListen
         mTextToSpeech.setPitch(1.0f);
         // 设置语速
         mTextToSpeech.setSpeechRate(0.5f);
+        mTextToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+            @Override
+            public void onStart(String utteranceId) {
+                // 开始播放
+
+            }
+
+            @Override
+            public void onDone(String utteranceId) {
+                // 完成播放
+
+            }
+
+            @Override
+            public void onError(String utteranceId) {
+
+            }
+        });
     }
 
     private void initView() {

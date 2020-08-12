@@ -1,6 +1,10 @@
 package com.goldze.mvvmhabit.ui.test;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +16,8 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.goldze.mvvmhabit.R;
+import com.goldze.mvvmhabit.TestAidlInterface;
+import com.goldze.mvvmhabit.TestAidlListener;
 import com.goldze.mvvmhabit.data.source.http.service.DemoApiService2;
 import com.goldze.mvvmhabit.entity.VillageStructuresResult;
 import com.goldze.mvvmhabit.multicast.MultiAudioActivity;
@@ -40,6 +46,9 @@ public class TestListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     List<TestListBean> testList = new ArrayList<>();
+    TestAidlInterface testBind;
+    TestAidlListener listener;
+    ServiceConnection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +70,15 @@ public class TestListActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(testListAdapter);
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (connection != null)
+            unbindService(connection);
     }
 
     // todo 设置测试类
@@ -198,7 +216,40 @@ public class TestListActivity extends AppCompatActivity {
                 }).start();
             }
         }));
+        testList.add(new TestListBean("跨进程AIDL回调测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                connection = new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        try {
+                            testBind = TestAidlInterface.Stub.asInterface(service);
+                            listener = new TestAidlListener.Stub() {
+                                @Override
+                                public void onCountAdd(int count) throws RemoteException {
+                                    Log.d("test", "onCountAdd count=" + testBind.getCount());
+                                }
+                            };
+                            testBind.registerListener(listener);
+                            Log.d("test", "count=" + testBind.getCount());
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+                        testBind = null;
+                    }
+                };
+                // 跨进程测试
+                Intent intent = new Intent();
+                intent.setAction("com.goldze.mvvmhabit.service.TestService");
+                //从 Android 5.0开始 隐式Intent绑定服务的方式已不能使用,所以这里需要设置Service所在服务端的包名
+                intent.setPackage("com.goldze.mvvmhabit");
+                bindService(intent, connection, BIND_AUTO_CREATE);
+            }
+        }));
 
     }
 
